@@ -34,7 +34,9 @@ namespace AdaptiveThresholding
             th.Tolerance = Int32.Parse(textBox2.Text);
             th.WindowSize = Int32.Parse(textBox1.Text); ;
             //Bitmap bmp = new Bitmap(100, 100,System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            Bitmap bmp = new Bitmap("test.bmp");
+            //Bitmap bmp = new Bitmap("test.bmp");
+
+            BitmapImage bmp = new BitmapImage(new Uri("test.bmp", UriKind.Relative));
 
             var start = System.DateTime.Now;
 
