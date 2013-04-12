@@ -12,31 +12,59 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing;
+using System.Threading;
 
 namespace AdaptiveThresholding
 {
+    
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        CamDevice dev;
+
         public MainWindow()
         {
             InitializeComponent();
 
+
+            Window1 wi = new Window1();
+
+            wi.Show();
+
+            dev = DeviceManager.GetAllDevices()[0];
+
+            dev.ShowWindow(wi);
+            
             
 
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+
+        private void Process()
         {
+            dev.CaptureImage();
+            BitmapSource bmp;
+            IDataObject data = Clipboard.GetDataObject();
+            if (data.GetDataPresent(DataFormats.Bitmap))
+            {
+                bmp = (BitmapSource)data.GetData(DataFormats.Bitmap, true);
+            }
+            else
+            {
+                bmp = new BitmapImage(new Uri("test.bmp", UriKind.Relative));
+            }
+
+
             IntergalImageThresholding th = new IntergalImageThresholding();
             th.Tolerance = Int32.Parse(textBox2.Text);
             th.WindowSize = Int32.Parse(textBox1.Text); ;
             //Bitmap bmp = new Bitmap(100, 100,System.Drawing.Imaging.PixelFormat.Format24bppRgb);
             //Bitmap bmp = new Bitmap("test.bmp");
 
-            BitmapImage bmp = new BitmapImage(new Uri("test.bmp", UriKind.Relative));
 
             var start = System.DateTime.Now;
 
@@ -45,6 +73,13 @@ namespace AdaptiveThresholding
             Console.WriteLine(System.DateTime.Now - start);
 
             image1.Source = img;
+        }
+        
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+
+            Process();
+            
         }
     }
 }

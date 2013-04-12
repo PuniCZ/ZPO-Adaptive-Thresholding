@@ -16,7 +16,7 @@ namespace AdaptiveThresholding
         public int Tolerance { get; set; }
         
 
-        public string ToString()
+        public override string  ToString()
         {
             return "Integral Image";
         }
