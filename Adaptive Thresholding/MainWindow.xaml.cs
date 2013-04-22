@@ -30,6 +30,7 @@ namespace AdaptiveThresholding
         string fileName;
 
         BitmapSource srcImage;
+        byte[,] srcData;
 
         public MainWindow()
         {
@@ -38,37 +39,48 @@ namespace AdaptiveThresholding
 
             camPreviewWindow = new CameraPreviewWindow();
 
-            //dev = DeviceManager.GetAllDevices()[0];
+            thMethods.Items.Add(new IntergalImageThresholding());
+            //TODO: Další metody přidejte sem + přidat i potřebné UI prvky
 
-            //dev.ShowWindow(wi);
-            
-            
 
+            thMethods.SelectedIndex = 0;
         }
 
 
-        private void Process()
-        {            
-            IThresholding th = new IntergalImageThresholding();
-            th.Tolerance = Int32.Parse(textBox2.Text);
-            th.WindowSize = Int32.Parse(textBox1.Text);
+        private void Process(bool dontConvert = false)
+        {
 
-            byte[,] srcData = Convertor.ToGrayscaleArray(srcImage);
+            IThresholding th = (IThresholding)thMethods.SelectedItem;
 
-            var start = System.DateTime.Now;
+            //převody UI prvků
+            th.Tolerance = Int32.Parse(tTolerance.Text);
+            th.WindowSize = Int32.Parse(tWindowSize.Text);
 
-            var outData = th.Process(srcData, srcImage.PixelWidth, srcImage.PixelHeight);
+            if (!dontConvert)
+            {
+                srcData = Convertor.ToGrayscaleArray(srcImage);
+            }
 
-            Console.WriteLine((System.DateTime.Now - start).Milliseconds);
+            if (srcData != null && srcImage != null)
+            {
+
+                var start = System.DateTime.Now;
+
+                var outData = th.Process(srcData, srcImage.PixelWidth, srcImage.PixelHeight);
+
+                lasRuntime.Text = (System.DateTime.Now - start).TotalMilliseconds.ToString("#.");
 
 
-            image1.Source = Convertor.ToBitmapSource(outData, srcImage);
+                image1.Source = Convertor.ToBitmapSource(outData, srcImage);
+            }
         }
         
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-
-            Process();
+            if (srcImage != null)
+                Process(true);
+            else
+                MessageBox.Show("Není vybrán žádný obrázek.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
             
         }
 

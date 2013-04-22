@@ -1,15 +1,10 @@
 ﻿<Window x:Class="AdaptiveThresholding.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="872" Width="968" Closing="Window_Closing">
+        Title="ZPO - Adaptivní thresholding" Height="623" Width="968" Closing="Window_Closing">
     <Grid>
-        <Image Margin="204,81,12,15" Name="image1" Stretch="Uniform" />
-        <Button Content="Button" Height="28" HorizontalAlignment="Left" Margin="267,17,0,0" Name="button1" VerticalAlignment="Top" Width="115" Click="button1_Click" />
-        <Label Content="Window" HorizontalAlignment="Left" Margin="461,15,0,0" Name="label1" Height="28" VerticalAlignment="Top" />
-        <Label Content="Tolerance" Height="28" HorizontalAlignment="Left" Margin="454,40,0,0" Name="label2" VerticalAlignment="Top" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="521,17,0,0" Name="textBox1" VerticalAlignment="Top" Width="120" Text="16" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="521,42,0,0" Name="textBox2" VerticalAlignment="Top" Width="120" Text="20" />
-        <GroupBox Header="Zdroj dat" HorizontalAlignment="Left" Name="groupBox1" Width="198" Height="225" VerticalAlignment="Top">
+        <Image Margin="204,0,0,0" Name="image1" Stretch="Uniform" />
+        <GroupBox Header="Zdroj dat" HorizontalAlignment="Left" Name="groupBox1" Width="198" Height="164" VerticalAlignment="Top" Margin="5,5,0,0">
             <Grid>
                 <RadioButton Content="Soubor" IsChecked="True" Height="16" HorizontalAlignment="Left" Margin="6,6,0,0" Name="srcSelFile" VerticalAlignment="Top" Checked="srcSelFile_Checked" />
                 <Label Content="není vybrán" Height="28" HorizontalAlignment="Left" Margin="22,25,0,0" Name="srcFileName" VerticalAlignment="Top" Width="103" />
@@ -17,6 +12,26 @@
                 <RadioButton Content="Kamera" Height="16" HorizontalAlignment="Left" Margin="6,59,0,0" Name="srcSelCamera" VerticalAlignment="Top" Checked="srcSelCamera_Checked" />
                 <ComboBox IsEnabled="False" Height="23" HorizontalAlignment="Left" Margin="22,81,0,0" Name="srcCamList" VerticalAlignment="Top" Width="158" SelectionChanged="srcCamList_SelectionChanged" />
                 <Button IsEnabled="False" Content="Sejmout a zpracovat snímek" Height="23" HorizontalAlignment="Left" Margin="22,110,0,0" Name="camProcess" VerticalAlignment="Top" Width="158" Click="camProcess_Click" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Nastavení thresholdingu" Height="295" HorizontalAlignment="Left" Margin="5,175,0,0" Name="groupBox2" VerticalAlignment="Top" Width="200">
+            <Grid>
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="6,40,0,0" Name="thMethods" VerticalAlignment="Top" Width="176" />
+                <Label Content="Metoda:" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label3" VerticalAlignment="Top" />
+                <Label Content="Velikost okna (poloěr):" HorizontalAlignment="Left" Margin="6,86,0,0" Name="label1" Height="28" VerticalAlignment="Top" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="140,88,0,0" Name="tWindowSize" VerticalAlignment="Top" Width="42" Text="{Binding ElementName=slider1, Path=Value}" TextAlignment="Right" />
+                <Slider Height="23" HorizontalAlignment="Left" Margin="6,120,0,0" Name="slider1" VerticalAlignment="Top" Width="174" Value="20" SmallChange="1" IsSnapToTickEnabled="True" TickFrequency="1" Minimum="1" LargeChange="5" Maximum="100" />
+                <Label Content="Tolerance:" Height="28" HorizontalAlignment="Left" Margin="6,164,0,0" Name="label2" VerticalAlignment="Top" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="140,166,0,0" Name="tTolerance" VerticalAlignment="Top" Width="40"  Text="{Binding ElementName=slider2, Path=Value}" TextAlignment="Right"/>
+                <Slider Height="23" HorizontalAlignment="Left" IsSnapToTickEnabled="True" LargeChange="5" Margin="6,198,0,0" Maximum="100" Minimum="1" Name="slider2" SmallChange="1" TickFrequency="1" Value="20" VerticalAlignment="Top" Width="174" />
+                <Button Content="Přepočítej" Height="28" HorizontalAlignment="Left" Margin="6,237,0,0" Name="button1" VerticalAlignment="Top" Width="176" Click="button1_Click" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Výsledky" Height="100" HorizontalAlignment="Left" Margin="5,476,0,0" Name="groupBox3" VerticalAlignment="Top" Width="200">
+            <Grid>
+                <Label Content="Doba posledního běhu:" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label4" VerticalAlignment="Top" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="82,34,0,0" Name="lasRuntime" VerticalAlignment="Top" Width="76" IsReadOnly="True" TextAlignment="Right" />
+                <Label Content="ms" Height="28" HorizontalAlignment="Left" Margin="156,33,0,0" Name="label5" VerticalAlignment="Top" />
             </Grid>
         </GroupBox>
     </Grid>
