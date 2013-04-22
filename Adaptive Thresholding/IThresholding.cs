@@ -10,8 +10,10 @@ namespace AdaptiveThresholding
     interface IThresholding
     {
         string ToString();
-        WriteableBitmap Process(BitmapSource img);
-
         int WindowSize { get; set; }
+        int Tolerance { get; set; }
+
+        byte[,] Process(byte[,] img, int width, int height);
+
     }
 }

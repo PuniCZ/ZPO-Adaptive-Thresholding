@@ -23,36 +23,14 @@ namespace AdaptiveThresholding
 
 
 
-        public WriteableBitmap Process(BitmapSource img)
+        public byte[,] Process(byte[,] grayscaleValues, int width, int height)
         {
-            WriteableBitmap output = new WriteableBitmap(img.PixelWidth, img.PixelHeight, 96, 96, PixelFormats.Gray8, null);
-
-            int inputBytesPerPixel = ((img.Format.BitsPerPixel + 7) / 8);
-            int inputStride = img.PixelWidth * inputBytesPerPixel;
-            byte[] rgbValues = new byte[img.PixelHeight * img.PixelWidth * inputBytesPerPixel];
-
-            img.CopyPixels(rgbValues, inputStride, 0);
-
-            byte[,] grayscaleValues = new byte[img.PixelHeight, img.PixelWidth];
-            for (int i = 0; i < img.Height; i++)
-            {
-                for (int j = 0; j < img.Width; j++)
-                {
-                    int addr = img.PixelWidth * i + j;
-                    grayscaleValues[i, j] = Convert.ToByte(
-                        .229f * rgbValues[addr * inputBytesPerPixel] + 
-                        .587f * rgbValues[addr * inputBytesPerPixel + 1] + 
-                        .114f * rgbValues[addr * inputBytesPerPixel + 2]
-                    );
-                }
-            }
-
             // Compute integral image
-            int[,] integralImage = new int[img.PixelHeight, img.PixelWidth];
-            for (int y = 0; y < img.Height; y++)
+            int[,] integralImage = new int[height, width];
+            for (int y = 0; y < height; y++)
             {
                 int sum = 0;
-                for (int x = 0; x < img.Width; x++)
+                for (int x = 0; x < width; x++)
                 {
                     sum += grayscaleValues[y, x];
                     if (y == 0)
@@ -62,16 +40,16 @@ namespace AdaptiveThresholding
                 }
             }
 
-            byte[,] outValues = new byte[img.PixelHeight, img.PixelWidth];
+            byte[,] outValues = new byte[height, width];
             // Perform thresholding
-            for (int y = 0; y < img.Height; y++)
+            for (int y = 0; y < height; y++)
             {
                 int y1 = Math.Max(y - WindowSize, 0);
-                int y2 = Math.Min(y + WindowSize, img.PixelHeight - 1);
-                for (int x = 0; x < img.Width; x++)
+                int y2 = Math.Min(y + WindowSize, height - 1);
+                for (int x = 0; x < width; x++)
                 {
                     int x1 = Math.Max(x - WindowSize, 0);
-                    int x2 = Math.Min(x + WindowSize, img.PixelWidth - 1);
+                    int x2 = Math.Min(x + WindowSize, width - 1);
                     int count = (x2 - x1) * (y2 - y1);
                     int sum = integralImage[y2, x2] - integralImage[y2, Math.Max(x1 - 1, 0)] - integralImage[Math.Max(y1 - 1, 0), x2] + integralImage[Math.Max(y1 - 1, 0), Math.Max(x1 - 1, 0)];
                     
@@ -82,12 +60,7 @@ namespace AdaptiveThresholding
 
                 }
             }
-
-            int bytesPerPixel = (output.Format.BitsPerPixel + 7) / 8;
-            int stride = output.PixelWidth * bytesPerPixel;
-            output.WritePixels(new Int32Rect(0, 0, img.PixelWidth, img.PixelHeight), outValues, stride, 0);
-
-            return output;
+            return outValues;
         }
 
         
