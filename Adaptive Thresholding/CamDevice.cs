@@ -49,7 +49,7 @@ namespace AdaptiveThresholding
             get { return _name; }
             set { _name = value; }
         }
-
+        
         private string _version;
 
         public string Version
@@ -60,7 +60,7 @@ namespace AdaptiveThresholding
 
         public override string ToString()
         {
-            return this.Name;
+            return this.Name.Replace("\0", "");
         }
         /// <summary>
         /// To Initialize the device

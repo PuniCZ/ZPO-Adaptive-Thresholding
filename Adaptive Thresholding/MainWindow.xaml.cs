@@ -87,6 +87,8 @@ namespace AdaptiveThresholding
             srcFileName.IsEnabled = false;
             srcFileOpen.IsEnabled = false;
             camProcess.IsEnabled = true;
+            if (srcCamList.SelectedIndex == -1)
+                srcCamList.SelectedIndex = 0;
         }
 
         private void srcSelFile_Checked(object sender, RoutedEventArgs e)
@@ -106,8 +108,12 @@ namespace AdaptiveThresholding
             if (camDevice != null)
                 camDevice.Stop();
             
-            camDevice = (CamDevice)srcCamList.SelectedItem;                
+            camDevice = (CamDevice)srcCamList.SelectedItem;
+            camPreviewWindow.Show();
+            camPreviewWindow.Topmost = true;
+            camPreviewWindow.WindowStyle = System.Windows.WindowStyle.ToolWindow;
             camDevice.ShowWindow(camPreviewWindow);
+            
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
