@@ -44,6 +44,7 @@ namespace AdaptiveThresholding
             thMethods.Items.Add(new FastMedianImageTresholding());
             thMethods.Items.Add(new AverageImageTresholding());
             thMethods.Items.Add(new RandImageTresholding());
+            thMethods.Items.Add(new MeanMinMaxImageTreshonding());
             //TODO: Další metody přidejte sem + přidat i potřebné UI prvky
 
             thMethods.SelectedIndex = 0;

@@ -71,6 +71,7 @@
       <DependentUpon>CameraPreviewWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="FastMedianImageTresholding.cs" />
+    <Compile Include="MeanMinMaxImageTreshonding.cs" />
     <Compile Include="RandImageTresholding.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
