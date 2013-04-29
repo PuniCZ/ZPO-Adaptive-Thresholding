@@ -41,10 +41,10 @@ namespace AdaptiveThresholding
 
             thMethods.Items.Add(new IntergalImageThresholding());
             thMethods.Items.Add(new MedianImageTresholding());
+            thMethods.Items.Add(new FastMedianImageTresholding());
             thMethods.Items.Add(new AverageImageTresholding());
             thMethods.Items.Add(new RandImageTresholding());
             //TODO: Další metody přidejte sem + přidat i potřebné UI prvky
-
 
             thMethods.SelectedIndex = 0;
         }
