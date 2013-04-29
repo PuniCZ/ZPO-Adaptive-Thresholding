@@ -40,6 +40,9 @@ namespace AdaptiveThresholding
             camPreviewWindow = new CameraPreviewWindow();
 
             thMethods.Items.Add(new IntergalImageThresholding());
+            thMethods.Items.Add(new MedianImageTresholding());
+            thMethods.Items.Add(new AverageImageTresholding());
+            thMethods.Items.Add(new RandImageTresholding());
             //TODO: Další metody přidejte sem + přidat i potřebné UI prvky
 
 
@@ -165,6 +168,11 @@ namespace AdaptiveThresholding
                 srcImage = (BitmapSource)data.GetData(DataFormats.Bitmap, true);
                 Process();
             }
+        }
+
+        private void thMethods_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

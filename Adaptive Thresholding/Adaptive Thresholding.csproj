@@ -66,9 +66,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AverageImageTresholding.cs" />
     <Compile Include="CameraPreviewWindow.xaml.cs">
       <DependentUpon>CameraPreviewWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RandImageTresholding.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -92,6 +94,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MedianImageTresholding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
