@@ -19,21 +19,38 @@ namespace AdaptiveThresholding
 
             img.CopyPixels(rgbValues, inputStride, 0);
 
-            byte[,] grayscaleValues = new byte[img.PixelHeight, img.PixelWidth];
-            for (int i = 0; i < img.PixelHeight; i++)
+            try
             {
-                for (int j = 0; j < img.PixelWidth; j++)
+                byte[,] grayscaleValues = new byte[img.PixelHeight, img.PixelWidth];
+                for (int i = 0; i < img.PixelHeight; i++)
                 {
-                    int addr = img.PixelWidth * i + j;
-                    grayscaleValues[i, j] = Convert.ToByte(
-                        .229f * rgbValues[addr * inputBytesPerPixel] +
-                        .587f * rgbValues[addr * inputBytesPerPixel + 1] +
-                        .114f * rgbValues[addr * inputBytesPerPixel + 2]
-                    );
+                    for (int j = 0; j < img.PixelWidth; j++)
+                    {
+                        int addr = img.PixelWidth * i + j;
+                        grayscaleValues[i, j] = Convert.ToByte(
+                            .229f * rgbValues[addr * inputBytesPerPixel] +
+                            .587f * rgbValues[addr * inputBytesPerPixel + 1] +
+                            .114f * rgbValues[addr * inputBytesPerPixel + 2]
+                        );
+                    }
                 }
+                return grayscaleValues;
             }
+            catch (System.IndexOutOfRangeException)
+            {
+                byte[,] grayscaleValuesCopy = new byte[img.PixelHeight, img.PixelWidth];
 
-            return grayscaleValues;
+                for (int i = 0; i < img.PixelHeight; i++)
+                {
+                    for (int j = 0; j < img.PixelWidth; j++)
+                    {
+                        int addr = img.PixelWidth * i + j;
+                        grayscaleValuesCopy[i, j] = rgbValues[addr * inputBytesPerPixel]; 
+                    }
+                }
+
+                return grayscaleValuesCopy;
+            }  
         }
 
         public static BitmapSource ToBitmapSource(byte[,] data, BitmapSource originalImage)

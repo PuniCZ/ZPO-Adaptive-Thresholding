@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace AdaptiveThresholding
 {
-    class MeanMinMaxImageTreshonding: IThresholding
+    class MeanMinMaxImageTresholding: IThresholding
     {
         public int WindowSize { get; set; }
 
@@ -18,7 +18,7 @@ namespace AdaptiveThresholding
 
         public override string  ToString()
         {
-            return "Mean MinMax Image";
+            return "MidGrey Image";
         }
 
 

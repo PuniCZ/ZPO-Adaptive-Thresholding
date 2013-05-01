@@ -9,16 +9,16 @@ using System.Windows;
 
 namespace AdaptiveThresholding
 {
-    class FastMedianImageTresholding: IThresholding
+    class NiblackImageTresholding : IThresholding
     {
         public int WindowSize { get; set; }
 
         public int Tolerance { get; set; }
-        
 
-        public override string  ToString()
+
+        public override string ToString()
         {
-            return "Fast Median Image";
+            return "Niblack Image";
         }
 
 
@@ -26,49 +26,50 @@ namespace AdaptiveThresholding
         public byte[,] Process(byte[,] grayscaleValues, int width, int height)
         {
             byte[,] outValues = new byte[height, width];
-            List<byte> vector = new List<byte>();
-            int position = 0;
+
+            long sum;
+            long sum2;
+            double mean;
+            double stdDev;
+            int counter;
 
             // Perform thresholding
             for (int y = 0; y < height; y++)
             {
                 int y1 = Math.Max(y - WindowSize, 0);
                 int y2 = Math.Min(y + WindowSize, height - 1);
-                int WindowSize2d = WindowSize * WindowSize;
-                int clearValue = WindowSize2d / 2;
-                int clear = clearValue;
-                
+
                 for (int x = 0; x < width; x++)
                 {
                     int x1 = Math.Max(x - WindowSize, 0);
                     int x2 = Math.Min(x + WindowSize, width - 1);
 
-                    if (clear == clearValue)
-                    {
-                        vector.Clear();
-                        for (int n = y1; n < y2; n++)
-                        {
-                            for (int m = x1; m < x2; m++)
-                            {
-                                vector.Add(grayscaleValues[n, m]);
-                            }
-                        }
+                    sum = 0;
+                    sum2 = 0;
+                    counter = 0;
 
-                        vector.Sort();
-                        position = (byte)(vector.Count / 2);
-                        clear = 0;
+                    for (int n = y1; n < y2; n++)
+                    {
+                        for (int m = x1; m < x2; m++)
+                        {
+                            counter++;
+                            sum += grayscaleValues[n, m];
+                            sum2 += (grayscaleValues[n, m] * grayscaleValues[n, m]);
+                        }
                     }
 
-                    if (grayscaleValues[y, x] <= (vector[position] * (100 - Tolerance) / 100))
+                    mean = (double)(sum / counter);
+                    stdDev = Math.Sqrt((sum2 / counter) - (mean * mean));
+
+                    if (grayscaleValues[y, x] <= (mean + 0.2 * stdDev) * (100 - Tolerance) / 100)
                         outValues[y, x] = 0;
                     else
                         outValues[y, x] = 255;
-
-                    clear++;
                 }
             }
             return outValues;
-        }  
+        }
+
+       
     }
 }
-
