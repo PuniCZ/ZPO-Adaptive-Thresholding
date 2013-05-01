@@ -19,7 +19,7 @@ namespace AdaptiveThresholding
 
             img.CopyPixels(rgbValues, inputStride, 0);
 
-            try
+            if(img.Format.BitsPerPixel > 8)
             {
                 byte[,] grayscaleValues = new byte[img.PixelHeight, img.PixelWidth];
                 for (int i = 0; i < img.PixelHeight; i++)
@@ -36,7 +36,7 @@ namespace AdaptiveThresholding
                 }
                 return grayscaleValues;
             }
-            catch (System.IndexOutOfRangeException)
+            else
             {
                 byte[,] grayscaleValuesCopy = new byte[img.PixelHeight, img.PixelWidth];
 

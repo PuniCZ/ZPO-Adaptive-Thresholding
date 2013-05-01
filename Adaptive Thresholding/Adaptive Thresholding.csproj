@@ -66,15 +66,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AverageImageTresholding.cs" />
-    <Compile Include="BernsenImageTresholding.cs" />
+    <Compile Include="MeanTresholding.cs" />
+    <Compile Include="BernsenTresholding.cs" />
     <Compile Include="CameraPreviewWindow.xaml.cs">
       <DependentUpon>CameraPreviewWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MeanMinMaxImageTresholding.cs" />
-    <Compile Include="NiblackImageTresholding.cs" />
-    <Compile Include="RandImageTresholding.cs" />
-    <Compile Include="SauvolaImageTresholding.cs" />
+    <Compile Include="MidGreyTresholding.cs" />
+    <Compile Include="NiblackTresholding.cs" />
+    <Compile Include="RandomTresholding.cs" />
+    <Compile Include="SauvolaTresholding.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -98,7 +98,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MedianImageTresholding.cs" />
+    <Compile Include="MedianTresholding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

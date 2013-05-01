@@ -40,12 +40,12 @@ namespace AdaptiveThresholding
             camPreviewWindow = new CameraPreviewWindow();
 
             thMethods.Items.Add(new IntergalImageThresholding());
-            thMethods.Items.Add(new RandImageTresholding());
-            thMethods.Items.Add(new AverageImageTresholding());
-            thMethods.Items.Add(new MedianImageTresholding());
-            thMethods.Items.Add(new MeanMinMaxImageTresholding());
-            thMethods.Items.Add(new BernsenImageTresholding());
-            thMethods.Items.Add(new NiblackImageTresholding());
+            thMethods.Items.Add(new RandomTresholding());
+            thMethods.Items.Add(new MeanTresholding());
+            thMethods.Items.Add(new MedianTresholding());
+            thMethods.Items.Add(new MidGreyTresholding());
+            thMethods.Items.Add(new BernsenTresholding());
+            thMethods.Items.Add(new NiblackTresholding());
             thMethods.Items.Add(new SauvolaImageTreshonding());
             //TODO: Další metody přidejte sem + přidat i potřebné UI prvky
 

@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace AdaptiveThresholding
 {
-    class BernsenImageTresholding: IThresholding
+    class MeanTresholding: IThresholding
     {
         public int WindowSize { get; set; }
 
@@ -18,7 +18,7 @@ namespace AdaptiveThresholding
 
         public override string  ToString()
         {
-            return "Bernsen Image";
+            return "Mean";
         }
 
 
@@ -27,47 +27,38 @@ namespace AdaptiveThresholding
         {
             byte[,] outValues = new byte[height, width];
             List<byte> vector = new List<byte>();
-
-            int localContrast;
-            int midGray;
+            int sum;
+            int counter;
 
             // Perform thresholding
             for (int y = 0; y < height; y++)
             {
                 int y1 = Math.Max(y - WindowSize, 0);
                 int y2 = Math.Min(y + WindowSize, height - 1);
-                
                 for (int x = 0; x < width; x++)
                 {
                     int x1 = Math.Max(x - WindowSize, 0);
                     int x2 = Math.Min(x + WindowSize, width - 1);
 
+                    sum = 0;
+                    counter = 0;
+
                     for (int n = y1; n < y2; n++)
                     {
                         for (int m = x1; m < x2; m++)                       
                         {
-                            vector.Add(grayscaleValues[n, m]);
+                            sum += grayscaleValues[n, m];
+                            counter++;
                         }
                     }
 
-                    localContrast = vector.Max() - vector.Min();
-                    midGray = (vector.Max() + vector.Min()) / 2;
-
-                    if (localContrast < 15)
-                    {
-                        if (midGray <= (128 *(100 - Tolerance) / 100))
-                            outValues[y, x] = 255;
-                        else
-                            outValues[y, x] = 0;
-                    }
+                    if (grayscaleValues[y, x] <= ((sum/counter) * (100 - Tolerance) / 100))
+                        outValues[y, x] = 0;
                     else
-                    {
-                        if (grayscaleValues[y, x] >= (midGray * (100 - Tolerance) / 100))
-                            outValues[y, x] = 255;
-                        else
-                            outValues[y, x] = 0;
-                    }
+                        outValues[y, x] = 255;
+
                     vector.Clear();
+
                 }
             }
             return outValues;

@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace AdaptiveThresholding
 {
-    class RandImageTresholding: IThresholding
+    class RandomTresholding: IThresholding
     {
         public int WindowSize { get; set; }
 
@@ -18,7 +18,7 @@ namespace AdaptiveThresholding
 
         public override string  ToString()
         {
-            return "Randomize Image";
+            return "Randomize";
         }
 
 
