@@ -61,7 +61,7 @@ namespace AdaptiveThresholding
                     mean = (double)(sum / counter);
                     stdDev = Math.Sqrt((sum2 / counter) - (mean * mean)); 
 
-                    if (grayscaleValues[y, x] <= (mean * (1.5 * (stdDev /(127)))) * (100 - Tolerance) / 100)
+                    if (grayscaleValues[y, x] <= (mean * (1 + 0.5 * (stdDev /(127)))) * (100 - Tolerance) / 100)
                         outValues[y, x] = 0;
                     else
                         outValues[y, x] = 255;
